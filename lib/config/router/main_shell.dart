@@ -19,11 +19,7 @@ class _MainShellState extends State<MainShell> {
   late final PageController _pageController;
   late int _currentIndex;
 
-  final List<Widget> _tabs = [
-    HomeScreen(),
-    DetailScreen(),
-    ProfileScreen(),
-  ];
+  final List<Widget> _tabs = [HomeScreen(), DetailScreen(), ProfileScreen()];
 
   final List<String> _paths = [
     RoutePaths.home,
@@ -71,35 +67,31 @@ class _MainShellState extends State<MainShell> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: _onNavTap,
-        type: BottomNavigationBarType.shifting,
+        type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(
             icon: Icon(
-              _currentIndex == 0
-                  ? Iconsax.home
-                  : Iconsax.home_1,
+              _currentIndex == 0 ? Iconsax.home_2 : Iconsax.home_2_copy,
               color: _currentIndex == 0 ? AppColors.orange : AppColors.myGrey,
-              size: 34,
+              size: 24,
             ),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              _currentIndex == 2
+              _currentIndex == 1
                   ? Iconsax.bitcoin_convert
-                  : Iconsax.bitcoin_convert,
-              color: _currentIndex == 2 ? AppColors.orange : AppColors.myGrey,
-              size: 34,
+                  : Iconsax.bitcoin_convert_copy,
+              color: _currentIndex == 1 ? AppColors.orange : AppColors.myGrey,
+              size: 24,
             ),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              _currentIndex == 3
-                  ? Iconsax.user
-                  : Iconsax.user,
-              color: _currentIndex == 3 ? AppColors.orange : AppColors.myGrey,
-              size: 34,
+              _currentIndex == 2 ? Iconsax.user : Iconsax.user_copy,
+              color: _currentIndex == 2 ? AppColors.orange : AppColors.myGrey,
+              size: 24,
             ),
             label: '',
           ),

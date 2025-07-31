@@ -1,11 +1,17 @@
 import 'package:crypto_app/config/router/main_shell.dart';
 import 'package:crypto_app/config/router/route_paths.dart';
+import 'package:crypto_app/features/all_crypto/presentation/screen/all_crypto_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: RoutePaths.home,
   routes: [
+    GoRoute(
+      path: RoutePaths.allCryptos,
+      builder: (context, state) => const AllCryptoScreen(),
+    ),
+    
     ShellRoute(
       builder: (context, state, child) {
         final location = state.uri.path;
