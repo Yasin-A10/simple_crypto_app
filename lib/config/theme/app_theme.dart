@@ -13,18 +13,16 @@ class AppTheme {
         surface: backgroundColor,
       ),
 
-      fontFamily: 'Shabnam',
       scaffoldBackgroundColor: backgroundColor,
 
       appBarTheme: const AppBarTheme(
         surfaceTintColor: AppColors.backgroundColor,
-        foregroundColor: AppColors.orange,
+        foregroundColor: AppColors.myBlack,
         elevation: 8,
         titleTextStyle: TextStyle(
-          color: primaryColor,
-          fontFamily: 'Shabnam',
-          fontSize: 20,
+          fontSize: 36,
           fontWeight: FontWeight.bold,
+          color: AppColors.myBlack,
         ),
       ),
 
