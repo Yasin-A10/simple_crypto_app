@@ -1,6 +1,10 @@
 import 'package:crypto_app/core/constants/colors.dart';
 import 'package:crypto_app/core/widgets/crypto_item.dart';
+import 'package:crypto_app/features/home/domain/entitis/crypto_entity.dart';
+import 'package:crypto_app/features/home/presentation/bloc/crypto_status.dart';
+import 'package:crypto_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainCryptoList extends StatelessWidget {
   const MainCryptoList({super.key});
@@ -34,21 +38,63 @@ class MainCryptoList extends StatelessWidget {
           ),
         ),
         SizedBox(height: 16),
-        SizedBox(
-          height: 350,
-          child: ListView(
-            scrollDirection: Axis.vertical,
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            children: [
-              CryptoItem(slope: true),
-              SizedBox(height: 28),
-              CryptoItem(slope: false),
-              SizedBox(height: 28),
-              CryptoItem(slope: true),
-              SizedBox(height: 28),
-              CryptoItem(slope: false),
-            ],
-          ),
+        BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) {
+
+            // for loading state
+            if (state.cryptoStatus is CryptoLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            // for success state
+            else if (state.cryptoStatus is CryptoSuccess) {
+
+              //cast cryptoStatus to CryptoSuccess
+              final CryptoSuccess cryptoSuccess = state.cryptoStatus as CryptoSuccess;
+              final CryptoEntity cryptoEntity = cryptoSuccess.cryptoEntity;
+
+              // return Text(cryptoEntity.data?.cryptoCurrencyList?.first.name?? 'No Data');
+              SizedBox(
+                height: 350,
+                child: ListView(
+                  scrollDirection: Axis.vertical,
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  children: [
+                    CryptoItem(slope: true),
+                    SizedBox(height: 28),
+                    CryptoItem(slope: false),
+                    SizedBox(height: 28),
+                    CryptoItem(slope: true),
+                    SizedBox(height: 28),
+                    CryptoItem(slope: false),
+                  ],
+                ),
+              );
+            }
+
+            // for error state
+            else if (state.cryptoStatus is CryptoError) {
+
+              //cast cryptoStatus to CryptoError
+              final CryptoError cryptoError = state.cryptoStatus as CryptoError;
+
+              return Center(
+                child: Text(
+                  cryptoError.message,
+                  style: TextStyle(
+                    color: AppColors.error200,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              );
+            }
+
+            // when state is null
+            return const SizedBox();
+          },
         ),
       ],
     );

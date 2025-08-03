@@ -12,7 +12,7 @@ class ApiProvider {
       baseUrl,
       queryParameters: {
         'start': 1,
-        'limit': 10,
+        'limit': 5,
         'convert': 'USD',
         'sortBy': 'rank',
         'sortType': 'desc',

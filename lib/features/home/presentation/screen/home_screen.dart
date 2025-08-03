@@ -1,7 +1,9 @@
 import 'package:crypto_app/core/constants/colors.dart';
+import 'package:crypto_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:crypto_app/features/home/presentation/widgets/main_cart.dart';
 import 'package:crypto_app/features/home/presentation/widgets/main_crypto_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,6 +14,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<HomeBloc>(context).add(LoadCryptoEvent());
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
