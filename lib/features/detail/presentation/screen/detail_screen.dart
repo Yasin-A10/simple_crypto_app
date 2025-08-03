@@ -1,8 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:crypto_app/core/constants/colors.dart';
+import 'package:crypto_app/features/detail/presentation/bloc/detail_bloc.dart';
+import 'package:crypto_app/features/detail/presentation/bloc/detail_crypto_status.dart';
 import 'package:crypto_app/features/detail/presentation/widgets/crypto_area_chart.dart';
 import 'package:crypto_app/features/detail/presentation/widgets/crypto_selection_list.dart';
+import 'package:crypto_app/features/home/domain/entitis/crypto_entity.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -13,6 +17,12 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<DetailBloc>(context).add(LoadDetailEvent(1));
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -50,65 +60,93 @@ class _DetailScreenState extends State<DetailScreen> {
               SizedBox(height: 12),
 
               //* Crypto Info
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          'assets/images/Group16.svg',
-                          width: 56,
-                          height: 56,
-                        ),
-                        SizedBox(width: 16),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'BTC',
-                              style: TextStyle(
-                                color: AppColors.myBlack,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
+              BlocBuilder<DetailBloc, DetailState>(
+                builder: (context, state) {
+                  if (state.detailCryptoStatus is DetailCryptoLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (state.detailCryptoStatus is DetailCryptoError) {
+                    return Center(
+                      child: Text(
+                        (state.detailCryptoStatus as DetailCryptoError).message,
+                      ),
+                    );
+                  }
+                  if (state.detailCryptoStatus is DetailCryptoSuccess) {
+                    final DetailCryptoSuccess detailCryptoSuccess =
+                        state.detailCryptoStatus as DetailCryptoSuccess;
+                    final CryptoEntity cryptoEntity =
+                        detailCryptoSuccess.cryptoEntity;
+                    final cryptoList = cryptoEntity.data?.cryptoCurrencyList;
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              CachedNetworkImage(
+                                imageUrl:
+                                    'https://s2.coinmarketcap.com/static/img/coins/32x32/${cryptoList![0].id}.png',
+                                width: 32,
+                                height: 32,
+                                placeholder: (context, url) => const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
                               ),
-                            ),
-                            Text(
-                              'Bitcoin',
-                              style: TextStyle(
-                                color: AppColors.myGrey2,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
+                              SizedBox(width: 16),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    cryptoList[0].name!,
+                                    style: TextStyle(
+                                      color: AppColors.myBlack,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Text(
+                                    cryptoList[0].symbol!,
+                                    style: TextStyle(
+                                      color: AppColors.myGrey2,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          '10,945.00',
-                          style: TextStyle(
-                            color: AppColors.myBlack,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
+                            ],
                           ),
-                        ),
-                        Text(
-                          '1.00 BTC',
-                          style: TextStyle(
-                            color: AppColors.myGrey2,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                '${cryptoList[0].quotes?[0].price?.toStringAsFixed(2)}',
+                                style: TextStyle(
+                                  color: AppColors.myBlack,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text(
+                                '${cryptoList[0].quotes?[0].price?.toStringAsFixed(2)} ${cryptoList[0].quotes?[0].name}',
+                                style: TextStyle(
+                                  color: AppColors.myGrey2,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                        ],
+                      ),
+                    );
+                  }
+                  return const SizedBox();
+                },
               ),
               SizedBox(height: 32),
 

@@ -53,7 +53,7 @@ class MainCryptoList extends StatelessWidget {
               final cryptoList = cryptoEntity.data?.cryptoCurrencyList;
 
               return SizedBox(
-                height: 330,
+                height: 320,
                 child: ListView.separated(
                   scrollDirection: Axis.vertical,
                   padding: EdgeInsets.symmetric(horizontal: 20),

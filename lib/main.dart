@@ -4,6 +4,7 @@ import 'package:crypto_app/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:crypto_app/features/home/presentation/bloc/home_bloc.dart';
+import 'package:crypto_app/features/detail/presentation/bloc/detail_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +15,9 @@ void main() async {
     providers: [
       BlocProvider(
         create: (_) => locator<HomeBloc>(),
+      ),
+      BlocProvider(
+        create: (_) => locator<DetailBloc>(),
       ),
     ],
     child: const MyApp(),

@@ -12,7 +12,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({required this.getCryptoUseCase})
     : super(HomeState(cryptoStatus: CryptoLoading())) {
 
-    on<HomeEvent>((event, emit) async {
+    on<LoadCryptoEvent>((event, emit) async {
 
       // emit loading state
       emit(state.copyWith(newCryptoStatus: CryptoLoading()));
