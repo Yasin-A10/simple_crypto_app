@@ -1,27 +1,36 @@
 import 'package:crypto_app/core/constants/colors.dart';
+import 'package:crypto_app/features/home/data/models/crypto_model.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CryptoItem extends StatelessWidget {
-  final bool slope;
-  const CryptoItem({super.key, required this.slope});
+  final CryptoCurrencyList cryptoCurrency;
+  const CryptoItem({
+    super.key,
+    required this.cryptoCurrency,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SizedBox(
-          width: 50,
-          height: 50,
-          child: SvgPicture.asset('assets/images/Group16.svg'),
+        CachedNetworkImage(
+          imageUrl:
+              'https://s2.coinmarketcap.com/static/img/coins/32x32/${cryptoCurrency.id}.png',
+          height: 32,
+          width: 32,
+          fadeInDuration: const Duration(milliseconds: 500),
+          placeholder: (context, url) => const CircularProgressIndicator(),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
+        SizedBox(width: 16),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'BTC',
+              '${cryptoCurrency.symbol}',
               style: TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w600,
@@ -38,16 +47,12 @@ class CryptoItem extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(
-          width: 60,
-          height: 30,
-          child: Image.asset('assets/images/chart.png', fit: BoxFit.fill),
-        ),
+        SizedBox(width: 16),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              '29,850.15',
+              '${cryptoCurrency.quotes?[0].price?.toStringAsFixed(2)}',
               style: TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w600,
@@ -55,7 +60,7 @@ class CryptoItem extends StatelessWidget {
               ),
             ),
             Text(
-              '47.61 ETH',
+              '${cryptoCurrency.quotes?[0].price?.toStringAsFixed(2)} ${cryptoCurrency.quotes?[0].name}',
               style: TextStyle(
                 color: AppColors.myGrey2,
                 fontSize: 15,
@@ -64,9 +69,18 @@ class CryptoItem extends StatelessWidget {
             ),
           ],
         ),
-        Icon(
-          slope ? Iconsax.arrow_circle_up_copy : Iconsax.arrow_circle_down_copy,
-          color: slope ? AppColors.success200 : AppColors.error200,
+        SizedBox(width: 16),
+        SizedBox(
+          width: 100,
+          child: ColorFiltered(
+            colorFilter: ColorFilter.mode(
+               (cryptoCurrency.quotes?.first.percentChange30d ?? 0) >= 0 ? AppColors.success200 : AppColors.error200,
+              BlendMode.srcIn,
+            ),
+            child: SvgPicture.network(
+              'https://s3.coinmarketcap.com/generated/sparklines/web/30d/2781/${cryptoCurrency.id}.svg',
+            ),
+          ),
         ),
       ],
     );

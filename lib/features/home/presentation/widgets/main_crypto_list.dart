@@ -40,43 +40,37 @@ class MainCryptoList extends StatelessWidget {
         SizedBox(height: 16),
         BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
-
             // for loading state
             if (state.cryptoStatus is CryptoLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const Center(child: CircularProgressIndicator());
             }
-
             // for success state
             else if (state.cryptoStatus is CryptoSuccess) {
-
               //cast cryptoStatus to CryptoSuccess
-              final CryptoSuccess cryptoSuccess = state.cryptoStatus as CryptoSuccess;
+              final CryptoSuccess cryptoSuccess =
+                  state.cryptoStatus as CryptoSuccess;
               final CryptoEntity cryptoEntity = cryptoSuccess.cryptoEntity;
+              final cryptoList = cryptoEntity.data?.cryptoCurrencyList;
 
-              // return Text(cryptoEntity.data?.cryptoCurrencyList?.first.name?? 'No Data');
-              SizedBox(
-                height: 350,
-                child: ListView(
+              return SizedBox(
+                height: 330,
+                child: ListView.separated(
                   scrollDirection: Axis.vertical,
                   padding: EdgeInsets.symmetric(horizontal: 20),
-                  children: [
-                    CryptoItem(slope: true),
-                    SizedBox(height: 28),
-                    CryptoItem(slope: false),
-                    SizedBox(height: 28),
-                    CryptoItem(slope: true),
-                    SizedBox(height: 28),
-                    CryptoItem(slope: false),
-                  ],
+                  itemCount: cryptoList?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    return CryptoItem(
+                      cryptoCurrency: cryptoList![index],
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return SizedBox(height: 28);
+                  },
                 ),
               );
             }
-
             // for error state
             else if (state.cryptoStatus is CryptoError) {
-
               //cast cryptoStatus to CryptoError
               final CryptoError cryptoError = state.cryptoStatus as CryptoError;
 

@@ -3,8 +3,8 @@
 import 'package:crypto_app/features/home/domain/entitis/crypto_entity.dart';
 
 class CryptoModel extends CryptoEntity {
-
-  const CryptoModel({Data? data, Status? status}) : super(data: data, status: status);
+  const CryptoModel({Data? data, Status? status})
+    : super(data: data, status: status);
 
   factory CryptoModel.fromJson(Map<String, dynamic> json) {
     return CryptoModel(
@@ -44,8 +44,9 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
     if (cryptoCurrencyList != null) {
-      json['cryptoCurrencyList'] =
-          cryptoCurrencyList!.map((v) => v.toJson()).toList();
+      json['cryptoCurrencyList'] = cryptoCurrencyList!
+          .map((v) => v.toJson())
+          .toList();
     }
     if (totalCount != null) {
       json['totalCount'] = totalCount;
@@ -61,8 +62,6 @@ class CryptoCurrencyList {
   String? slug;
   int? cmcRank;
   int? marketPairCount;
-  double? circulatingSupply;
-  int? selfReportedCirculatingSupply;
   double? totalSupply;
   double? maxSupply;
   double? ath;
@@ -84,8 +83,6 @@ class CryptoCurrencyList {
     this.slug,
     this.cmcRank,
     this.marketPairCount,
-    this.circulatingSupply,
-    this.selfReportedCirculatingSupply,
     this.totalSupply,
     this.maxSupply,
     this.ath,
@@ -108,10 +105,8 @@ class CryptoCurrencyList {
     slug = json['slug'];
     cmcRank = json['cmcRank'];
     marketPairCount = json['marketPairCount'];
-    circulatingSupply = (json['circulatingSupply'] as num?)?.toDouble();
-    selfReportedCirculatingSupply = json['selfReportedCirculatingSupply'];
-    totalSupply = json['totalSupply'];
-    maxSupply = json['maxSupply'];
+    totalSupply = (json['totalSupply'] as num?)?.toDouble();
+    maxSupply = (json['maxSupply'] as num?)?.toDouble();
     ath = (json['ath'] as num?)?.toDouble();
     atl = (json['atl'] as num?)?.toDouble();
     high24h = (json['high24h'] as num?)?.toDouble();
@@ -126,7 +121,9 @@ class CryptoCurrencyList {
       });
     }
     isAudited = json['isAudited'];
-    auditInfoList = json['auditInfoList'] != null ? List.from(json['auditInfoList']) : null;
+    auditInfoList = json['auditInfoList'] != null
+        ? List.from(json['auditInfoList'])
+        : null;
     badges = json['badges'] != null ? List<int>.from(json['badges']) : null;
   }
 
@@ -138,8 +135,6 @@ class CryptoCurrencyList {
     if (slug != null) json['slug'] = slug;
     if (cmcRank != null) json['cmcRank'] = cmcRank;
     if (marketPairCount != null) json['marketPairCount'] = marketPairCount;
-    if (circulatingSupply != null) json['circulatingSupply'] = circulatingSupply;
-    if (selfReportedCirculatingSupply != null) json['selfReportedCirculatingSupply'] = selfReportedCirculatingSupply;
     if (totalSupply != null) json['totalSupply'] = totalSupply;
     if (maxSupply != null) json['maxSupply'] = maxSupply;
     if (ath != null) json['ath'] = ath;
@@ -149,7 +144,8 @@ class CryptoCurrencyList {
     if (isActive != null) json['isActive'] = isActive;
     if (lastUpdated != null) json['lastUpdated'] = lastUpdated;
     if (dateAdded != null) json['dateAdded'] = dateAdded;
-    if (quotes != null) json['quotes'] = quotes!.map((v) => v.toJson()).toList();
+    if (quotes != null)
+      json['quotes'] = quotes!.map((v) => v.toJson()).toList();
     if (isAudited != null) json['isAudited'] = isAudited;
     if (auditInfoList != null) json['auditInfoList'] = auditInfoList;
     if (badges != null) json['badges'] = badges;
@@ -217,11 +213,14 @@ class Quotes {
     percentChange30d = (json['percentChange30d'] as num?)?.toDouble();
     percentChange60d = (json['percentChange60d'] as num?)?.toDouble();
     percentChange90d = (json['percentChange90d'] as num?)?.toDouble();
-    fullyDilluttedMarketCap = (json['fullyDilluttedMarketCap'] as num?)?.toDouble();
-    marketCapByTotalSupply = (json['marketCapByTotalSupply'] as num?)?.toDouble();
+    fullyDilluttedMarketCap = (json['fullyDilluttedMarketCap'] as num?)
+        ?.toDouble();
+    marketCapByTotalSupply = (json['marketCapByTotalSupply'] as num?)
+        ?.toDouble();
     dominance = (json['dominance'] as num?)?.toDouble();
     turnover = (json['turnover'] as num?)?.toDouble();
-    ytdPriceChangePercentage = (json['ytdPriceChangePercentage'] as num?)?.toDouble();
+    ytdPriceChangePercentage = (json['ytdPriceChangePercentage'] as num?)
+        ?.toDouble();
     percentChange1y = (json['percentChange1y'] as num?)?.toDouble();
   }
 
@@ -233,7 +232,8 @@ class Quotes {
     if (volume7d != null) json['volume7d'] = volume7d;
     if (volume30d != null) json['volume30d'] = volume30d;
     if (marketCap != null) json['marketCap'] = marketCap;
-    if (selfReportedMarketCap != null) json['selfReportedMarketCap'] = selfReportedMarketCap;
+    if (selfReportedMarketCap != null)
+      json['selfReportedMarketCap'] = selfReportedMarketCap;
     if (percentChange1h != null) json['percentChange1h'] = percentChange1h;
     if (percentChange24h != null) json['percentChange24h'] = percentChange24h;
     if (percentChange7d != null) json['percentChange7d'] = percentChange7d;
@@ -241,11 +241,14 @@ class Quotes {
     if (percentChange30d != null) json['percentChange30d'] = percentChange30d;
     if (percentChange60d != null) json['percentChange60d'] = percentChange60d;
     if (percentChange90d != null) json['percentChange90d'] = percentChange90d;
-    if (fullyDilluttedMarketCap != null) json['fullyDilluttedMarketCap'] = fullyDilluttedMarketCap;
-    if (marketCapByTotalSupply != null) json['marketCapByTotalSupply'] = marketCapByTotalSupply;
+    if (fullyDilluttedMarketCap != null)
+      json['fullyDilluttedMarketCap'] = fullyDilluttedMarketCap;
+    if (marketCapByTotalSupply != null)
+      json['marketCapByTotalSupply'] = marketCapByTotalSupply;
     if (dominance != null) json['dominance'] = dominance;
     if (turnover != null) json['turnover'] = turnover;
-    if (ytdPriceChangePercentage != null) json['ytdPriceChangePercentage'] = ytdPriceChangePercentage;
+    if (ytdPriceChangePercentage != null)
+      json['ytdPriceChangePercentage'] = ytdPriceChangePercentage;
     if (percentChange1y != null) json['percentChange1y'] = percentChange1y;
     return json;
   }
