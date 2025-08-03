@@ -5,12 +5,14 @@ import 'package:crypto_app/features/detail/presentation/bloc/detail_crypto_statu
 import 'package:crypto_app/features/detail/presentation/widgets/crypto_area_chart.dart';
 import 'package:crypto_app/features/detail/presentation/widgets/crypto_selection_list.dart';
 import 'package:crypto_app/features/home/domain/entitis/crypto_entity.dart';
+import 'package:crypto_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class DetailScreen extends StatefulWidget {
-  const DetailScreen({super.key});
+  final int start;
+  const DetailScreen({super.key, required this.start});
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -20,7 +22,8 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<DetailBloc>(context).add(LoadDetailEvent(1));
+    BlocProvider.of<DetailBloc>(context).add(LoadDetailEvent(widget.start));
+    BlocProvider.of<HomeBloc>(context).add(LoadCryptoEvent());
   }
 
   @override
@@ -86,6 +89,9 @@ class _DetailScreenState extends State<DetailScreen> {
                           Row(
                             children: [
                               CachedNetworkImage(
+                                fadeInDuration: const Duration(
+                                  milliseconds: 500,
+                                ),
                                 imageUrl:
                                     'https://s2.coinmarketcap.com/static/img/coins/32x32/${cryptoList![0].id}.png',
                                 width: 32,

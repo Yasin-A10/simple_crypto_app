@@ -19,7 +19,7 @@ class _MainShellState extends State<MainShell> {
   late final PageController _pageController;
   late int _currentIndex;
 
-  final List<Widget> _tabs = [HomeScreen(), DetailScreen(), ProfileScreen()];
+  final List<Widget> _tabs = [HomeScreen(), DetailScreen(start: 1), ProfileScreen()];
 
   final List<String> _paths = [
     RoutePaths.home,
