@@ -1,9 +1,7 @@
-import 'package:crypto_app/core/constants/colors.dart';
 import 'package:crypto_app/core/widgets/crypto_item.dart';
 import 'package:crypto_app/features/all_crypto/presentation/bloc/all_crypto_bloc.dart';
 import 'package:crypto_app/features/all_crypto/presentation/bloc/all_crypto_status.dart';
 import 'package:crypto_app/features/home/data/models/crypto_model.dart';
-import 'package:crypto_app/features/home/domain/entitis/crypto_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
