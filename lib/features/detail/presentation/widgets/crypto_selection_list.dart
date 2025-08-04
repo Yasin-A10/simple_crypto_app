@@ -24,12 +24,6 @@ class _CryptoSelectionListState extends State<CryptoSelectionList> {
     });
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   BlocProvider.of<DetailBloc>(context).add(LoadDetailEvent(1));
-  // }
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(

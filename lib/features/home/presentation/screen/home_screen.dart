@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SizedBox(height: 8),
-            MainCryptoList(),
+            Expanded(child: MainCryptoList()),
             SizedBox(height: 8),
           ],
         ),

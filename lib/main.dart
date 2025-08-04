@@ -1,5 +1,6 @@
 import 'package:crypto_app/config/router/app_router.dart';
 import 'package:crypto_app/config/theme/app_theme.dart';
+import 'package:crypto_app/features/all_crypto/presentation/bloc/all_crypto_bloc.dart';
 import 'package:crypto_app/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +19,9 @@ void main() async {
       ),
       BlocProvider(
         create: (_) => locator<DetailBloc>(),
+      ),
+      BlocProvider(
+        create: (_) => locator<AllCryptoBloc>(),
       ),
     ],
     child: const MyApp(),

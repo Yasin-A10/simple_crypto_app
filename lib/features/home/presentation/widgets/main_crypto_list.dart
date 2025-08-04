@@ -5,6 +5,7 @@ import 'package:crypto_app/features/home/presentation/bloc/crypto_status.dart';
 import 'package:crypto_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class MainCryptoList extends StatelessWidget {
   const MainCryptoList({super.key});
@@ -19,76 +20,78 @@ class MainCryptoList extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Charts',
+                'Top Cryptos',
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w400,
                   color: AppColors.myGrey2,
                 ),
               ),
-              Text(
-                'See All',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.orange,
+              TextButton(
+                onPressed: () {
+                  context.push('/all_cryptos');
+                },
+                child: Text(
+                  'See All',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.orange,
+                  ),
                 ),
               ),
             ],
           ),
         ),
         SizedBox(height: 16),
-        BlocBuilder<HomeBloc, HomeState>(
-          builder: (context, state) {
-            // for loading state
-            if (state.cryptoStatus is CryptoLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            // for success state
-            else if (state.cryptoStatus is CryptoSuccess) {
-              //cast cryptoStatus to CryptoSuccess
-              final CryptoSuccess cryptoSuccess =
-                  state.cryptoStatus as CryptoSuccess;
-              final CryptoEntity cryptoEntity = cryptoSuccess.cryptoEntity;
-              final cryptoList = cryptoEntity.data?.cryptoCurrencyList;
-
-              return SizedBox(
-                height: 320,
-                child: ListView.separated(
+        Expanded(
+          child: BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              // for loading state
+              if (state.cryptoStatus is CryptoLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              // for success state
+              else if (state.cryptoStatus is CryptoSuccess) {
+                //cast cryptoStatus to CryptoSuccess
+                final CryptoSuccess cryptoSuccess =
+                    state.cryptoStatus as CryptoSuccess;
+                final CryptoEntity cryptoEntity = cryptoSuccess.cryptoEntity;
+                final cryptoList = cryptoEntity.data?.cryptoCurrencyList;
+          
+                return ListView.separated(
                   scrollDirection: Axis.vertical,
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   itemCount: cryptoList?.length ?? 0,
                   itemBuilder: (context, index) {
-                    return CryptoItem(
-                      cryptoCurrency: cryptoList![index],
-                    );
+                    return CryptoItem(cryptoCurrency: cryptoList![index]);
                   },
                   separatorBuilder: (context, index) {
                     return SizedBox(height: 28);
                   },
-                ),
-              );
-            }
-            // for error state
-            else if (state.cryptoStatus is CryptoError) {
-              //cast cryptoStatus to CryptoError
-              final CryptoError cryptoError = state.cryptoStatus as CryptoError;
-
-              return Center(
-                child: Text(
-                  cryptoError.message,
-                  style: TextStyle(
-                    color: AppColors.error200,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
+                );
+              }
+              // for error state
+              else if (state.cryptoStatus is CryptoError) {
+                //cast cryptoStatus to CryptoError
+                final CryptoError cryptoError = state.cryptoStatus as CryptoError;
+          
+                return Center(
+                  child: Text(
+                    cryptoError.message,
+                    style: TextStyle(
+                      color: AppColors.error200,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-              );
-            }
-
-            // when state is null
-            return const SizedBox();
-          },
+                );
+              }
+          
+              // when state is null
+              return const SizedBox();
+            },
+          ),
         ),
       ],
     );

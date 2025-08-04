@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static const Color primaryColor = AppColors.orange;
-  static const Color backgroundColor = AppColors.backgroundColor;
+  static const Color backgroundColor = AppColors.white;
 
   static ThemeData get lightTheme {
     return ThemeData(
@@ -16,7 +16,7 @@ class AppTheme {
       scaffoldBackgroundColor: backgroundColor,
 
       appBarTheme: const AppBarTheme(
-        surfaceTintColor: AppColors.backgroundColor,
+        surfaceTintColor: AppColors.white,
         foregroundColor: AppColors.myBlack,
         elevation: 8,
         titleTextStyle: TextStyle(

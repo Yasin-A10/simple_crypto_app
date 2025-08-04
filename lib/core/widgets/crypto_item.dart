@@ -7,18 +7,15 @@ import 'package:go_router/go_router.dart';
 
 class CryptoItem extends StatelessWidget {
   final CryptoCurrencyList cryptoCurrency;
-  const CryptoItem({
-    super.key,
-    required this.cryptoCurrency,
-  });
+  const CryptoItem({super.key, required this.cryptoCurrency});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         context.push('/crypto', extra: cryptoCurrency.cmcRank);
-        print('Crypto Item Tapped: ${cryptoCurrency.cmcRank}');
       },
+
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -80,7 +77,9 @@ class CryptoItem extends StatelessWidget {
             width: 100,
             child: ColorFiltered(
               colorFilter: ColorFilter.mode(
-                 (cryptoCurrency.quotes?.first.percentChange30d ?? 0) >= 0 ? AppColors.success200 : AppColors.error200,
+                (cryptoCurrency.quotes?.first.percentChange30d ?? 0) >= 0
+                    ? AppColors.success200
+                    : AppColors.error200,
                 BlendMode.srcIn,
               ),
               child: SvgPicture.network(
