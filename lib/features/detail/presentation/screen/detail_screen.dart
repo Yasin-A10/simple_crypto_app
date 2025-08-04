@@ -59,7 +59,7 @@ class _DetailScreenState extends State<DetailScreen> {
               SizedBox(height: 16),
 
               //* Crypto Selection List
-              CryptoSelectionList(),
+              CryptoSelectionList(start: widget.start),
               SizedBox(height: 12),
 
               //* Crypto Info

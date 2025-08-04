@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CryptoSelectionList extends StatefulWidget {
-  const CryptoSelectionList({super.key});
+  final int start;
+  const CryptoSelectionList({super.key, required this.start});
 
   @override
   State<CryptoSelectionList> createState() => _CryptoSelectionListState();
@@ -14,6 +15,20 @@ class CryptoSelectionList extends StatefulWidget {
 
 class _CryptoSelectionListState extends State<CryptoSelectionList> {
   int selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      selectedIndex = widget.start - 1;
+    });
+  }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   BlocProvider.of<DetailBloc>(context).add(LoadDetailEvent(1));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +51,10 @@ class _CryptoSelectionListState extends State<CryptoSelectionList> {
                 return GestureDetector(
                   onTap: () {
                     setState(() {
-                      selectedIndex = index;
-                      BlocProvider.of<DetailBloc>(context).add(
-                        LoadDetailEvent(cryptoList[index].id!),
-                      );
+                      selectedIndex = cryptoList[index].cmcRank! - 1;
+                      BlocProvider.of<DetailBloc>(
+                        context,
+                      ).add(LoadDetailEvent(cryptoList[index].cmcRank!));
                     });
                   },
                   child: Column(

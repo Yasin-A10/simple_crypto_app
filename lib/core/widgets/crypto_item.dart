@@ -1,9 +1,9 @@
 import 'package:crypto_app/core/constants/colors.dart';
-import 'package:crypto_app/features/detail/presentation/screen/detail_screen.dart';
 import 'package:crypto_app/features/home/data/models/crypto_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:go_router/go_router.dart';
 
 class CryptoItem extends StatelessWidget {
   final CryptoCurrencyList cryptoCurrency;
@@ -16,12 +16,8 @@ class CryptoItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DetailScreen(start: cryptoCurrency.id!),
-          ),
-        );
+        context.push('/crypto', extra: cryptoCurrency.cmcRank);
+        print('Crypto Item Tapped: ${cryptoCurrency.cmcRank}');
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
